@@ -1,6 +1,6 @@
 # Beulah — waitlist
 
-Cinematic waitlist for Beulah, the B2B creator marketplace. A 3D obsidian head is
+Cinematic waitlist for Beulah, the creator & brand marketplace. A 3D obsidian head is
 cut by a laser scan line and dissolves into particles above it; brands and creators
 leave their email below.
 

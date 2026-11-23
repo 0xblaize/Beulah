@@ -24,7 +24,7 @@ const mono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Beulah",
   description:
-    "Beulah connects B2B brands with the creators their buyers already trust. Join the waitlist.",
+    "The creator & brand marketplace. Where brands meet influence. Where creators meet opportunity.",
   // CC BY 3.0 asks for attribution; the visible footer credit was removed, so it lives here.
   other: {
     "model-credit": "3D head scan by Lee Perry-Smith, CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)",
