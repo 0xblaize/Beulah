@@ -1,0 +1,153 @@
+.form {
+  display: grid;
+  gap: 12px;
+}
+
+.roles {
+  display: inline-flex;
+  width: max-content;
+  max-width: 100%;
+  border: 1px solid var(--smoke);
+}
+
+.roles input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.roles label {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  cursor: pointer;
+  color: var(--ash);
+  transition: color 0.3s, background 0.3s;
+}
+
+.roles label.on {
+  background: var(--bone);
+  color: var(--void);
+}
+
+.roles label:has(input:focus-visible) {
+  outline: 1px solid var(--tungsten);
+  outline-offset: 2px;
+}
+
+.field {
+  display: flex;
+  border-bottom: 1px solid var(--smoke);
+  transition: border-color 0.3s;
+}
+
+.field:focus-within {
+  border-color: var(--bone);
+}
+
+.field input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: var(--bone);
+  font: inherit;
+  font-size: 17px;
+  font-weight: 300;
+  padding: 16px 0;
+}
+
+.field input::placeholder {
+  color: var(--ash);
+  opacity: 0.7;
+}
+
+.field button {
+  background: transparent;
+  border: 0;
+  color: var(--bone);
+  cursor: pointer;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0 0 0 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+
+.field button span {
+  display: inline-block;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.field button:hover span {
+  transform: translateX(6px);
+}
+
+.field button:focus-visible {
+  outline: 1px solid var(--tungsten);
+  outline-offset: 4px;
+}
+
+.field button:disabled {
+  opacity: 0.4;
+  cursor: progress;
+}
+
+.status {
+  margin: 0;
+  min-height: 1.4em;
+  font-size: 13px;
+  color: var(--tungsten);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.joined {
+  display: grid;
+  gap: 8px;
+  border-top: 1px solid var(--smoke);
+  padding-top: 18px;
+}
+
+.joined h2 {
+  margin: 0;
+  font-family: var(--f-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 32px;
+}
+
+.joined p {
+  margin: 0;
+  color: var(--ash);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.joined b {
+  color: var(--bone);
+  font-weight: 400;
+}
+
+.position {
+  display: block;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--tungsten);
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,33 @@
+.stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Black curtain that lifts once the head has loaded. */
+.veil {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: var(--void);
+  pointer-events: none;
+  transition: opacity 2.4s ease;
+}
+
+.veilOff {
+  opacity: 0;
+}
+
+/* No WebGL: a still tungsten-and-ice light study stands in for the head. */
+.noGl {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 22% 34% at 68% 46%, rgba(255, 199, 154, 0.16), transparent 70%),
+    radial-gradient(ellipse 30% 45% at 74% 40%, rgba(169, 189, 255, 0.1), transparent 70%),
+    var(--void);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .veil { transition: none; }
+}

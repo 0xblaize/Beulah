@@ -1,0 +1,36 @@
+/* One cinematic frame: a fixed WebGL stage, letterbox bars, copy anchored bottom-left. */
+:root {
+  --void: #050506;
+  --bone: #ece7df;
+  --ash: #8a8680;
+  --smoke: rgba(236, 231, 223, 0.14);
+  --tungsten: #ffc79a;
+  --ice: #a9bdff;
+  --bar: clamp(36px, 6vh, 56px);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+/* next/font sets --font-* on <body>, so the stacks that use them live here too. */
+body {
+  --f-display: var(--font-display), "Didot", "Bodoni 72", Georgia, serif;
+  --f-body: var(--font-body), "Helvetica Neue", Arial, sans-serif;
+  --f-mono: var(--font-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  background: var(--void);
+  color: var(--bone);
+  font-family: var(--f-body);
+  font-weight: 300;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+[hidden] { display: none !important; }
+
+::selection { background: var(--tungsten); color: var(--void); }
