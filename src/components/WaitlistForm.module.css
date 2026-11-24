@@ -143,6 +143,39 @@
   font-weight: 400;
 }
 
+/* After sign-up: the next step is following along on X. */
+.follow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  justify-self: start;
+  min-height: 50px;
+  margin-top: 8px;
+  padding: 0 22px;
+  background: var(--bone);
+  color: var(--void);
+  text-decoration: none;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.follow span {
+  display: inline-block;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.follow:hover span {
+  transform: translate(3px, -3px);
+}
+
+.follow:focus-visible {
+  outline: 1px solid var(--tungsten);
+  outline-offset: 3px;
+}
+
 .position {
   display: block;
   font-family: var(--f-mono);

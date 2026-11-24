@@ -7,6 +7,7 @@ import styles from "./WaitlistForm.module.css";
 type Joined = { email: string; role: Role; position: number };
 
 const REMEMBER_KEY = "beulah:joined";
+const X_URL = "https://x.com/beulahhub";
 
 function readSaved() {
   try {
@@ -80,6 +81,9 @@ export function WaitlistForm({ initialRole = "brand" }: { initialRole?: Role }) 
           We&rsquo;ll write to <b>{joined.email}</b> the day Beulah opens to{" "}
           {joined.role === "creator" ? "creators" : "brands"}.
         </p>
+        <a className={styles.follow} href={X_URL} target="_blank" rel="noopener noreferrer">
+          Follow us on X for updates <span aria-hidden="true">↗</span>
+        </a>
       </div>
     );
   }

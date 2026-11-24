@@ -69,11 +69,6 @@
   50% { opacity: 0.15; }
 }
 
-.tc {
-  font-variant-numeric: tabular-nums;
-  color: var(--bone);
-}
-
 .tagline {
   color: var(--bone);
 }
