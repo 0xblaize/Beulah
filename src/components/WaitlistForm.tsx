@@ -7,7 +7,7 @@ import styles from "./WaitlistForm.module.css";
 type Joined = { email: string; role: Role; position: number };
 
 const REMEMBER_KEY = "beulah:joined";
-const X_URL = "https://x.com/beulahhub";
+const X_URL = "https://x.com/beulah_ia";
 
 function readSaved() {
   try {
