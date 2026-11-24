@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Bodoni_Moda, Geist, Geist_Mono } from "next/font/google";
+import { Frame } from "@/components/Frame";
+import { StageLoader } from "@/components/StageLoader";
 import "./globals.css";
 
 const display = Bodoni_Moda({
@@ -22,7 +24,7 @@ const mono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Beulah",
+  title: { default: "Beulah", template: "%s · Beulah" },
   description:
     "The creator & brand marketplace. Where brands meet influence. Where creators meet opportunity.",
   // CC BY 3.0 asks for attribution; the visible footer credit was removed, so it lives here.
@@ -44,7 +46,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${display.variable} ${body.variable} ${mono.variable}`}>
-        {children}
+        <StageLoader />
+        <Frame>{children}</Frame>
       </body>
     </html>
   );

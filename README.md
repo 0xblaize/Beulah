@@ -20,7 +20,9 @@ Open http://localhost:3000.
 
 | Path | What it does |
 | --- | --- |
-| `src/app/page.tsx` | The page: letterbox bars, headline, form |
+| `src/app/page.tsx` | Landing page: headline and the brand/creator buttons |
+| `src/app/waitlist/page.tsx` | Waitlist page (`/waitlist?role=brand` or `creator`) |
+| `src/components/Frame.tsx` | Letterbox bars shared by both pages |
 | `src/components/scene/` | The 3D scene (`Stage` canvas + effects, `Scene` lights/camera/scan, `Head` model + particles, `shaders.ts`) |
 | `src/components/WaitlistForm.tsx` | Brand/creator toggle and email form |
 | `src/app/api/waitlist/route.ts` | `POST /api/waitlist` — validates and saves a sign-up |
@@ -29,12 +31,14 @@ Open http://localhost:3000.
 
 ## Sign-ups
 
-Sign-ups are written to `data/waitlist.json` (git-ignored). Each email is stored once;
-signing up again returns the original place in line.
+Sign-ups are stored in Supabase Postgres, in a `waitlist` table that the app creates on
+the first sign-up. Each email is stored once; signing up again returns the original
+place in line. View them in Supabase → Table Editor → `waitlist`.
 
-That file store is for local demos. Serverless hosts such as Vercel have a read-only
-filesystem, so replace `src/lib/waitlist-store.ts` with a database (Supabase, Postgres,
-Airtable…) before deploying. The route and form don't need to change.
+Set `DATABASE_URL` (see `.env.example`) in `.env.local` for local runs and in Vercel →
+Settings → Environment Variables for the live site. Use the **Transaction pooler**
+connection string (port 6543); the direct `db.*.supabase.co` address doesn't work on
+Vercel.
 
 ## Credits
 

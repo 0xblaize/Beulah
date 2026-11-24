@@ -151,3 +151,48 @@
   color: var(--tungsten);
   font-variant-numeric: tabular-nums;
 }
+
+/* Mobile: thumb-sized targets, a solid full-width button. */
+@media (max-width: 900px), (max-aspect-ratio: 11/10) {
+  .roles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+
+  .roles label {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
+  }
+
+  .field {
+    flex-direction: column;
+    gap: 10px;
+    border-bottom: 0;
+  }
+
+  .field input {
+    border-bottom: 1px solid var(--smoke);
+    padding: 12px 0;
+    font-size: 16px;
+  }
+
+  .field input:focus {
+    border-color: var(--bone);
+  }
+
+  .field button {
+    justify-content: center;
+    min-height: 50px;
+    padding: 0 16px;
+    background: var(--bone);
+    color: var(--void);
+  }
+
+  .field button:hover span {
+    transform: none;
+  }
+}

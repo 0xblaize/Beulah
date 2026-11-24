@@ -1,0 +1,21 @@
+.logo {
+  display: block;
+  flex: none;
+  overflow: visible;
+}
+
+/* The dots keep drifting up off the ball, like the particles in the hero. */
+.dot {
+  animation: drift 2.8s ease-in-out infinite;
+}
+
+@keyframes drift {
+  50% {
+    transform: translateY(-1.6px);
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot { animation: none; }
+}

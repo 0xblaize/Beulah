@@ -21,8 +21,8 @@ function subscribeSaved(onChange: () => void) {
   return () => window.removeEventListener("storage", onChange);
 }
 
-export function WaitlistForm() {
-  const [role, setRole] = useState<Role>("brand");
+export function WaitlistForm({ initialRole = "brand" }: { initialRole?: Role }) {
+  const [role, setRole] = useState<Role>(initialRole);
   const [email, setEmail] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");

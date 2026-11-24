@@ -11,7 +11,10 @@ import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment
 import { Head } from "./Head";
 import { createLaserMaterial, createScanUniforms } from "./shaders";
 
-const PHONE = 760;
+/** Stacked layout: phones and portrait tablets. Keep in sync with page.module.css. */
+function isStacked(width: number, height: number) {
+  return width <= 900 || width / height < 1.1;
+}
 
 type SceneProps = {
   reducedMotion: boolean;
@@ -28,7 +31,7 @@ export function Scene({ reducedMotion, onReady }: SceneProps) {
   const { gl, scene, size, viewport } = useThree();
   const uniforms = useMemo(() => createScanUniforms(), []);
   const laserMaterial = useMemo(() => createLaserMaterial(), []);
-  const small = size.width <= PHONE;
+  const small = isStacked(size.width, size.height);
 
   // Soft studio reflections for the clearcoat, generated locally (no HDR download).
   useEffect(() => {

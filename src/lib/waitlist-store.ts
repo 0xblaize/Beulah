@@ -1,44 +1,52 @@
 import "server-only";
 
-import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
-import path from "node:path";
-import type { Role, WaitlistEntry } from "./waitlist";
+import postgres from "postgres";
+import type { Role } from "./waitlist";
 
 /**
- * Local demo store: sign-ups live in data/waitlist.json.
- * Swap this module for a real database (Supabase, Postgres, Airtable…) before
- * deploying to a serverless host, whose filesystem is read-only.
+ * Sign-ups live in a Postgres table (Supabase). DATABASE_URL must be the pooler
+ * connection string (Supabase → Connect → Transaction pooler, port 6543): the direct
+ * db.*.supabase.co host is IPv6-only and unreachable from Vercel.
  */
-const FILE = path.join(process.cwd(), "data", "waitlist.json");
+let sql: postgres.Sql | undefined;
+let ready: Promise<unknown> | undefined;
 
-let queue: Promise<unknown> = Promise.resolve();
-
-async function readAll(): Promise<WaitlistEntry[]> {
-  try {
-    return JSON.parse(await readFile(FILE, "utf8")) as WaitlistEntry[];
-  } catch (err) {
-    if ((err as NodeJS.ErrnoException).code === "ENOENT") return [];
-    throw err;
-  }
-}
-
-async function writeAll(entries: WaitlistEntry[]) {
-  await mkdir(path.dirname(FILE), { recursive: true });
-  const tmp = `${FILE}.tmp`;
-  await writeFile(tmp, JSON.stringify(entries, null, 2));
-  await rename(tmp, FILE);
+function db() {
+  const url = process.env.DATABASE_URL;
+  if (!url) throw new Error("DATABASE_URL is not set");
+  // The transaction pooler can't keep prepared statements; one connection per function instance.
+  sql ??= postgres(url, { prepare: false, max: 1 });
+  // Row level security with no policies keeps the emails out of Supabase's public API;
+  // this server connects as the table owner, which bypasses it.
+  ready ??= sql`
+    create table if not exists waitlist (
+      id bigint generated always as identity primary key,
+      email text not null unique,
+      role text not null check (role in ('brand', 'creator')),
+      joined_at timestamptz not null default now()
+    );
+    alter table waitlist enable row level security;
+  `
+    .simple()
+    .catch((err) => {
+      ready = undefined;
+      throw err;
+    });
+  return { sql, ready };
 }
 
 /** Adds an email once; a repeat sign-up returns the original place in line. */
-export function addToWaitlist(email: string, role: Role) {
-  const run = queue.then(async () => {
-    const entries = await readAll();
-    const existing = entries.findIndex((e) => e.email === email);
-    if (existing !== -1) return { position: existing + 1, alreadyJoined: true };
-    entries.push({ email, role, joinedAt: new Date().toISOString() });
-    await writeAll(entries);
-    return { position: entries.length, alreadyJoined: false };
-  });
-  queue = run.catch(() => undefined);
-  return run;
+export async function addToWaitlist(email: string, role: Role) {
+  const { sql, ready } = db();
+  await ready;
+  const inserted = await sql`
+    insert into waitlist (email, role) values (${email}, ${role})
+    on conflict (email) do nothing
+    returning id
+  `;
+  const [{ position }] = await sql<{ position: number }[]>`
+    select count(*)::int as position from waitlist
+    where id <= (select id from waitlist where email = ${email})
+  `;
+  return { position, alreadyJoined: inserted.length === 0 };
 }
